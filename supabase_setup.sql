@@ -1,5 +1,5 @@
 -- 魂募集サイトテンプレート 初期設定SQL
--- 実行前に、このファイル内の YOUR_EMAIL@example.com を管理者メールに全置換してください。
+-- 実行前に、このファイル内の irastokodou@gmail.com を管理者メールに全置換してください。
 
 create table if not exists public.site_settings (
   key text primary key,
@@ -59,29 +59,29 @@ drop policy if exists "settings public read" on public.site_settings;
 create policy "settings public read" on public.site_settings for select to anon,authenticated using(true);
 drop policy if exists "admin inserts settings" on public.site_settings;
 create policy "admin inserts settings" on public.site_settings for insert to authenticated
-with check(lower(coalesce((select auth.jwt())->>'email',''))=lower('YOUR_EMAIL@example.com'));
+with check(lower(coalesce((select auth.jwt())->>'email',''))=lower('irastokodou@gmail.com'));
 drop policy if exists "admin updates settings" on public.site_settings;
 create policy "admin updates settings" on public.site_settings for update to authenticated
-using(lower(coalesce((select auth.jwt())->>'email',''))=lower('YOUR_EMAIL@example.com'))
-with check(lower(coalesce((select auth.jwt())->>'email',''))=lower('YOUR_EMAIL@example.com'));
+using(lower(coalesce((select auth.jwt())->>'email',''))=lower('irastokodou@gmail.com'))
+with check(lower(coalesce((select auth.jwt())->>'email',''))=lower('irastokodou@gmail.com'));
 
 drop policy if exists "published characters public read" on public.characters;
 create policy "published characters public read" on public.characters for select to anon,authenticated
-using(is_published or lower(coalesce((select auth.jwt())->>'email',''))=lower('YOUR_EMAIL@example.com'));
+using(is_published or lower(coalesce((select auth.jwt())->>'email',''))=lower('irastokodou@gmail.com'));
 drop policy if exists "admin inserts characters" on public.characters;
 create policy "admin inserts characters" on public.characters for insert to authenticated
-with check(lower(coalesce((select auth.jwt())->>'email',''))=lower('YOUR_EMAIL@example.com'));
+with check(lower(coalesce((select auth.jwt())->>'email',''))=lower('irastokodou@gmail.com'));
 drop policy if exists "admin updates characters" on public.characters;
 create policy "admin updates characters" on public.characters for update to authenticated
-using(lower(coalesce((select auth.jwt())->>'email',''))=lower('YOUR_EMAIL@example.com'))
-with check(lower(coalesce((select auth.jwt())->>'email',''))=lower('YOUR_EMAIL@example.com'));
+using(lower(coalesce((select auth.jwt())->>'email',''))=lower('irastokodou@gmail.com'))
+with check(lower(coalesce((select auth.jwt())->>'email',''))=lower('irastokodou@gmail.com'));
 drop policy if exists "admin deletes characters" on public.characters;
 create policy "admin deletes characters" on public.characters for delete to authenticated
-using(lower(coalesce((select auth.jwt())->>'email',''))=lower('YOUR_EMAIL@example.com'));
+using(lower(coalesce((select auth.jwt())->>'email',''))=lower('irastokodou@gmail.com'));
 
 drop policy if exists "admin reads analytics" on public.analytics_events;
 create policy "admin reads analytics" on public.analytics_events for select to authenticated
-using(lower(coalesce((select auth.jwt())->>'email',''))=lower('YOUR_EMAIL@example.com'));
+using(lower(coalesce((select auth.jwt())->>'email',''))=lower('irastokodou@gmail.com'));
 
 grant select,insert,update on public.site_settings to authenticated;
 grant select on public.site_settings to anon;
@@ -140,7 +140,7 @@ create or replace function public.get_admin_analytics(p_period text default '30d
 returns jsonb language plpgsql stable security definer set search_path=pg_catalog as $$
 declare start_at timestamptz; result jsonb;
 begin
- if lower(coalesce(auth.jwt()->>'email',''))<>lower('YOUR_EMAIL@example.com') then raise exception '管理者のみ利用できます'; end if;
+ if lower(coalesce(auth.jwt()->>'email',''))<>lower('irastokodou@gmail.com') then raise exception '管理者のみ利用できます'; end if;
  start_at:=case p_period when '7d' then now()-interval '7 days' when '30d' then now()-interval '30 days' else '1970-01-01'::timestamptz end;
  select jsonb_build_object('totals',jsonb_build_object(
    'page_views',count(*) filter(where e.event_name='page_view'),
@@ -165,13 +165,13 @@ drop policy if exists "site assets public read" on storage.objects;
 create policy "site assets public read" on storage.objects for select to public using(bucket_id='site-assets');
 drop policy if exists "admin uploads site assets" on storage.objects;
 create policy "admin uploads site assets" on storage.objects for insert to authenticated
-with check(bucket_id='site-assets' and lower(coalesce((select auth.jwt())->>'email',''))=lower('YOUR_EMAIL@example.com'));
+with check(bucket_id='site-assets' and lower(coalesce((select auth.jwt())->>'email',''))=lower('irastokodou@gmail.com'));
 drop policy if exists "admin updates site assets" on storage.objects;
 create policy "admin updates site assets" on storage.objects for update to authenticated
-using(bucket_id='site-assets' and lower(coalesce((select auth.jwt())->>'email',''))=lower('YOUR_EMAIL@example.com'))
-with check(bucket_id='site-assets' and lower(coalesce((select auth.jwt())->>'email',''))=lower('YOUR_EMAIL@example.com'));
+using(bucket_id='site-assets' and lower(coalesce((select auth.jwt())->>'email',''))=lower('irastokodou@gmail.com'))
+with check(bucket_id='site-assets' and lower(coalesce((select auth.jwt())->>'email',''))=lower('irastokodou@gmail.com'));
 drop policy if exists "admin deletes site assets" on storage.objects;
 create policy "admin deletes site assets" on storage.objects for delete to authenticated
-using(bucket_id='site-assets' and lower(coalesce((select auth.jwt())->>'email',''))=lower('YOUR_EMAIL@example.com'));
+using(bucket_id='site-assets' and lower(coalesce((select auth.jwt())->>'email',''))=lower('irastokodou@gmail.com'));
 
 -- 完了後、SupabaseのAuthentication設定で公開URLをSite URLとRedirect URLに登録してください。
