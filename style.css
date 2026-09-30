@@ -48,3 +48,40 @@ button {
 button:hover {
   background: #f0f0f0;
 }
+.preview-area {
+  margin-top: 40px;
+}
+
+.preview-area h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.preview-box {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 24px;
+  background: var(--background-image, #fff);
+  color: var(--theme-color, #222);
+  font-family: var(--theme-font, 'Hiragino Sans');
+  transition: all 0.3s ease;
+}
+
+.preview-box .menu-bar {
+  background: var(--menu-gradient, var(--theme-color));
+  padding: 12px 24px;
+  display: flex;
+  gap: 24px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.preview-box .menu-bar a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-family: var(--theme-font);
+}
+
