@@ -110,5 +110,21 @@ document.getElementById("applyMenuGrad").addEventListener("click", () => {
 
   alert("メニューバーにグラデーションを適用しました！");
 });
+  function updatePreview() {
+  const preview = document.getElementById("previewBox");
+  preview.style.backgroundImage = getComputedStyle(document.documentElement).getPropertyValue("--background-image");
+  preview.style.color = getComputedStyle(document.documentElement).getPropertyValue("--theme-color");
+  preview.style.fontFamily = getComputedStyle(document.documentElement).getPropertyValue("--theme-font");
+
+  // メニューバーのグラデーションも更新
+  const menuBar = preview.querySelector(".menu-bar");
+  menuBar.style.background = getComputedStyle(document.documentElement).getPropertyValue("--menu-gradient");
+}
+
+// 各「適用」ボタンにプレビュー更新を紐付け
+document.querySelectorAll("#applyFont, #applyColor, #applyBg, #applyMenuGrad").forEach(btn => {
+  btn.addEventListener("click", updatePreview);
+});
+
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./config.js"></script><script src="./admin.js"></script></body></html>
