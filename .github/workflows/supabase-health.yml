@@ -2,8 +2,8 @@ name: Supabase Health Check
 
 on:
   schedule:
-    - cron: "0 0 * * *"  # 毎日午前9時（日本時間）に実行
-  workflow_dispatch:      # 手動実行も可能
+    - cron: "0 0 * * *"  # 毎日午前9時（日本時間）
+  workflow_dispatch:
 
 jobs:
   ping:
@@ -12,4 +12,5 @@ jobs:
     steps:
       - name: Call Supabase Health API
         run: |
-          curl -X GET "https://wybedvwlpaherojzuxs.supabase.co/functions/v1/super-responder"
+          curl -X GET "https://wybedvwlpaherojzuxs.supabase.co/functions/v1/super-responder" \
+          -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}"
