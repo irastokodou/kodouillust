@@ -13,4 +13,5 @@ jobs:
       - name: Call Supabase Health API
         run: |
           curl -X GET "https://wybedvwlpaherojzuxs.supabase.co/functions/v1/super-responder" \
-          -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}"
+          -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+          -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}"
